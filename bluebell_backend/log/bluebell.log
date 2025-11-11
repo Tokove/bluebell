@@ -1,20 +1,2 @@
-{"level":"INFO","time":"2025-11-10T17:47:12.325+0800","caller":"logger/logger.go:44","msg":"init logger success"}
-{"level":"ERROR","time":"2025-11-10T17:48:06.085+0800","caller":"controller/user.go:61","msg":"service.Login failed","username":"zhang3","error":"用户名或密码错误"}
-{"level":"INFO","time":"2025-11-10T17:48:06.085+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0500658}
-{"level":"INFO","time":"2025-11-10T17:48:09.775+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0484808}
-{"level":"INFO","time":"2025-11-10T17:59:35.290+0800","caller":"logger/logger.go:44","msg":"init logger success"}
-{"level":"INFO","time":"2025-11-10T17:59:40.225+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0487067}
-{"level":"INFO","time":"2025-11-10T18:06:47.102+0800","caller":"logger/logger.go:44","msg":"init logger success"}
-{"level":"ERROR","time":"2025-11-10T18:07:01.614+0800","caller":"controller/user.go:18","msg":"signup with invalid param","error":"Key: 'ParamSignUp.confirm_password' Error:Field validation for 'confirm_password' failed on the 'required' tag"}
-{"level":"INFO","time":"2025-11-10T18:07:01.614+0800","caller":"logger/logger.go:77","msg":"/register","status":200,"method":"POST","path":"/register","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0005454}
-{"level":"ERROR","time":"2025-11-10T18:07:18.901+0800","caller":"controller/user.go:30","msg":"service.SignUp failed","error":"用户已存在"}
-{"level":"INFO","time":"2025-11-10T18:07:18.901+0800","caller":"logger/logger.go:77","msg":"/register","status":200,"method":"POST","path":"/register","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0022155}
-{"level":"INFO","time":"2025-11-10T18:07:26.993+0800","caller":"logger/logger.go:77","msg":"/register","status":200,"method":"POST","path":"/register","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0543069}
-{"level":"INFO","time":"2025-11-10T18:07:37.434+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.048119}
-{"level":"INFO","time":"2025-11-10T18:12:53.128+0800","caller":"logger/logger.go:44","msg":"init logger success"}
-{"level":"INFO","time":"2025-11-10T18:13:00.440+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0479752}
-{"level":"INFO","time":"2025-11-10T18:14:25.666+0800","caller":"logger/logger.go:77","msg":"/register","status":200,"method":"POST","path":"/register","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0669904}
-{"level":"INFO","time":"2025-11-10T18:14:34.798+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0632169}
-{"level":"INFO","time":"2025-11-10T18:19:37.101+0800","caller":"logger/logger.go:44","msg":"init logger success"}
-{"level":"INFO","time":"2025-11-10T18:20:05.950+0800","caller":"logger/logger.go:77","msg":"/register","status":200,"method":"POST","path":"/register","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0513122}
-{"level":"INFO","time":"2025-11-10T18:20:14.445+0800","caller":"logger/logger.go:77","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"::1","user-agent":"PostmanRuntime/7.50.0","errors":"","cost":0.0466114}
+{"level":"INFO","time":"2025-11-11T20:33:41.927+0800","caller":"logger/logger.go:44","msg":"init logger success"}
+{"level":"INFO","time":"2025-11-11T20:35:18.733+0800","caller":"logger/logger.go:44","msg":"init logger success"}

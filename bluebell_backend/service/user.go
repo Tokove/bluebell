@@ -3,10 +3,10 @@ package service
 import (
 	"bluebell_backend/dao/mysql"
 	"bluebell_backend/model"
+	"bluebell_backend/pkg/crypto"
 	"bluebell_backend/pkg/errcode"
 	"bluebell_backend/pkg/jwt"
 	"bluebell_backend/pkg/snowflake"
-	"bluebell_backend/pkg/utils"
 )
 
 func Register(p *model.ParamSignUp) (err error) {
@@ -25,7 +25,7 @@ func Register(p *model.ParamSignUp) (err error) {
 		UserID:   userID,
 		Username: p.Username,
 	}
-	user.Password, err = utils.HashPassword(p.Password)
+	user.Password, err = crypto.HashPassword(p.Password)
 	if err != nil {
 		return err
 	}
@@ -40,7 +40,7 @@ func Login(user *model.User) (string, error) {
 		return "", err
 	}
 	// 比对密码
-	if err := utils.CheckPassword(u.Password, user.Password); err != nil {
+	if err := crypto.CheckPassword(u.Password, user.Password); err != nil {
 		return "", errcode.ErrorInvalidPassword
 	}
 	return jwt.GenToken(u.UserID, u.Username)
