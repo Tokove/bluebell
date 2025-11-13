@@ -5,6 +5,7 @@ import (
 	"bluebell_backend/model"
 	"bluebell_backend/service"
 	"errors"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -71,7 +72,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	ResponseSuccess(c, gin.H{
-		"user_id":  user.UserID,
+		"user_id":  strconv.FormatUint(user.UserID, 10),
 		"username": user.Username,
 		"token":    user.Token,
 	})
