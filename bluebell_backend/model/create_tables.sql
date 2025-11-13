@@ -30,6 +30,7 @@ INSERT INTO `community` VALUES ('1', '1', 'Go', 'Golang', '2016-11-01 08:10:10',
 INSERT INTO `community` VALUES ('2', '2', 'leetcode', '刷题刷题刷题', '2020-01-01 08:00:00', '2020-01-01 08:00:00');
 INSERT INTO `community` VALUES ('3', '3', 'PUBG', '大吉大利，今晚吃鸡。', '2018-08-07 08:30:00', '2018-08-07 08:30:00');
 INSERT INTO `community` VALUES ('4', '4', 'LOL', '欢迎来到英雄联盟!', '2016-01-01 08:00:00', '2016-01-01 08:00:00');
+INSERT INTO `community` VALUES ('5', '5', 'CSGO', 'go学长和瓦学弟', '2016-01-01 08:00:00', '2016-01-01 08:00:00');
 
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (

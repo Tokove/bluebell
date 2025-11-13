@@ -32,15 +32,21 @@ func Register(p *model.ParamSignUp) (err error) {
 	return mysql.InsertUser(user)
 }
 
-func Login(user *model.User) (string, error) {
+func Login(u *model.User) (*model.User, error) {
 	// 查询用户密码
-	u, err := mysql.GetUserByUsername(user.Username)
+	user, err := mysql.GetUserByUsername(u.Username)
 	if err != nil {
-		return "", err
+		return nil, mysql.ErrorUserNotExist
 	}
 	// 比对密码
-	if err := crypto.CheckPassword(u.Password, user.Password); err != nil {
-		return "", mysql.ErrorInvalidPassword
+	if err := crypto.CheckPassword(user.Password, u.Password); err != nil {
+		return nil, mysql.ErrorInvalidPassword
 	}
-	return jwt.GenToken(u.UserID, u.Username)
+	// 生成token
+	token, err := jwt.GenToken(u.UserID, u.Username)
+	if err != nil {
+		return nil, err
+	}
+	user.Token = token
+	return user, nil
 }

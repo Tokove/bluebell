@@ -52,11 +52,11 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
-	user := &model.User{
+	u := &model.User{
 		Username: p.Username,
 		Password: p.Password,
 	}
-	token, err := service.Login(user)
+	user, err := service.Login(u)
 	if err != nil {
 		zap.L().Error("service.Login failed", zap.String("username", p.Username), zap.Error(err))
 		if errors.Is(err, mysql.ErrorUserNotExist) {
@@ -70,5 +70,9 @@ func LoginHandler(c *gin.Context) {
 		ResponseError(c, CodeServerBusy)
 		return
 	}
-	ResponseSuccess(c, token)
+	ResponseSuccess(c, gin.H{
+		"user_id":  user.UserID,
+		"username": user.Username,
+		"token":    user.Token,
+	})
 }

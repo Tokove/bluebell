@@ -25,8 +25,21 @@ func InsertUser(user *model.User) error {
 
 func GetUserByUsername(username string) (*model.User, error) {
 	sqlStr := `select user_id, username, password from user where username = ?`
-	user := &model.User{}
+	user := new(model.User)
 	err := db.Get(user, sqlStr, username)
+	if err == sql.ErrNoRows {
+		return nil, ErrorUserNotExist
+	}
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func GetUserByID(id uint64) (*model.User, error) {
+	sqlStr := `select user_id, username from user where user_id = ?`
+	user := new(model.User)
+	err := db.Get(user, sqlStr, id)
 	if err == sql.ErrNoRows {
 		return nil, ErrorUserNotExist
 	}

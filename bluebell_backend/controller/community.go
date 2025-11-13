@@ -11,7 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func CommunityHandler(c *gin.Context) {
+func GetCommunityHandler(c *gin.Context) {
 	communityList, err := service.GetCommunityList()
 	if err != nil {
 		zap.L().Error("service.GetCommunityList failed", zap.Error(err))
@@ -21,7 +21,7 @@ func CommunityHandler(c *gin.Context) {
 	ResponseSuccess(c, communityList)
 }
 
-func CommunityDetailHandler(c *gin.Context) {
+func GetCommunityDetailHandler(c *gin.Context) {
 	idStr := strings.TrimSpace(c.Param("id"))
 	id, err := strconv.ParseUint(idStr, 10, 64)
 	if err != nil {

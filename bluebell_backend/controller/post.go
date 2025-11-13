@@ -42,7 +42,7 @@ func CreatePostHandler(c *gin.Context) {
 	ResponseSuccess(c, nil)
 }
 
-func PostDetailHandler(c *gin.Context) {
+func GetPostDetailHandler(c *gin.Context) {
 	idStr := strings.TrimSpace(c.Param("id"))
 	id, err := strconv.ParseUint(idStr, 10, 64)
 	if err != nil {
@@ -60,4 +60,15 @@ func PostDetailHandler(c *gin.Context) {
 		}
 	}
 	ResponseSuccess(c, detail)
+}
+
+func GetPostHandler(c *gin.Context) {
+	page, size := getPageInfo(c)
+
+	data, err := service.GetPostList(page, size)
+	if err != nil {
+		zap.L().Error("service.GetPostList() failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+	}
+	ResponseSuccess(c, data)
 }
