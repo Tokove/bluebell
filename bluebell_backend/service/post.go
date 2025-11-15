@@ -2,6 +2,7 @@ package service
 
 import (
 	"bluebell_backend/dao/mysql"
+	"bluebell_backend/dao/redis"
 	"bluebell_backend/model"
 	"bluebell_backend/pkg/snowflake"
 
@@ -15,7 +16,11 @@ func CreatePost(p *model.Post) (err error) {
 		err = mysql.ErrorInvalidID
 		return
 	}
-	return mysql.CreatePost(p)
+	err = mysql.CreatePost(p)
+	if err != nil {
+		return err
+	}
+	return redis.CreatePost(p.ID)
 }
 
 func GetPostDetial(id uint64) (data *model.ApiPostDetail, err error) {
