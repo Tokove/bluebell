@@ -30,6 +30,9 @@ func VoteForPost(userID, postID string, nowDirection float64) error {
 	key := getRedisKey(KeyPostVotedZSetPrefix + postID)
 	prevDirection := client.ZScore(key, userID).Val()
 	diff := nowDirection - prevDirection
+	if diff == 0{
+		return ErrorVoteRepeat
+	}
 	// 修改后必须记录，用pipeline
 	pipeline := client.TxPipeline()
 	// 修改分数

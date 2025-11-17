@@ -1,8 +1,10 @@
 package model
 
 const (
-	OrderTime  = "time"
-	OrderScore = "score"
+	OrderTime   = "time"
+	OrderScore  = "score"
+	DefaultPage = 1
+	DefaultSize = 10
 )
 
 type ParamSignUp struct {
@@ -25,4 +27,5 @@ type ParamPostList struct {
 	Page  int64  `form:"page"`
 	Size  int64  `form:"size"`
 	Order string `form:"order"`
+	CommunityID uint64 `json:"community_id" form:"community_id"`
 }

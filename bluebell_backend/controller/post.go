@@ -13,7 +13,6 @@ import (
 	"go.uber.org/zap"
 )
 
-
 func CreatePostHandler(c *gin.Context) {
 	p := new(model.Post)
 	if err := c.ShouldBindJSON(p); err != nil {
@@ -81,8 +80,8 @@ func GetPostHandler(c *gin.Context) {
 // 3.去数据库查询对应信息
 func GetPostHandler2(c *gin.Context) {
 	p := &model.ParamPostList{
-		Page:  1,
-		Size:  10,
+		Page:  model.DefaultPage,
+		Size:  model.DefaultSize,
 		Order: model.OrderTime,
 	}
 	if err := c.ShouldBindQuery(p); err != nil {
@@ -90,7 +89,7 @@ func GetPostHandler2(c *gin.Context) {
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
-	data, err := service.GetPostList2(p)
+	data, err := service.GetPostListNew(p)
 	if err != nil {
 		zap.L().Error("service.GetPostList2 failed", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
@@ -98,3 +97,5 @@ func GetPostHandler2(c *gin.Context) {
 	}
 	ResponseSuccess(c, data)
 }
+
+

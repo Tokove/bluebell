@@ -20,7 +20,7 @@ func CreatePost(p *model.Post) (err error) {
 	if err != nil {
 		return err
 	}
-	return redis.CreatePost(p.ID)
+	return redis.CreatePost(p.ID, p.CommunityID)
 }
 
 func GetPostDetial(id uint64) (data *model.ApiPostDetail, err error) {
@@ -80,12 +80,20 @@ func GetPostList2(p *model.ParamPostList) (data []*model.ApiPostDetail, err erro
 	}
 	if len(ids) == 0 {
 		zap.L().Warn("redis.GetPostIDsInOrder success, but ids is nil")
-		return 
+		return
 	}
 	// mysql 查询信息
 	posts, err := mysql.GetPostListByIDs(ids)
+	if err != nil {
+		return nil, err
+	}
+	voteDatas, err := redis.GetPostVoteData(ids)
+	if err != nil {
+		return nil, err
+	}
 	data = make([]*model.ApiPostDetail, 0, len(posts))
-	for _, post := range posts {
+
+	for idx, post := range posts {
 		user, err := mysql.GetUserByID(post.AuthorID)
 		if err != nil {
 			zap.L().Error(" mysql.GetUserByID(id) failed", zap.Uint64("author_id", post.AuthorID), zap.Error(err))
@@ -98,10 +106,70 @@ func GetPostList2(p *model.ParamPostList) (data []*model.ApiPostDetail, err erro
 		}
 		postDetail := &model.ApiPostDetail{
 			AuthorName:      user.Username,
+			VoteNum:         voteDatas[idx],
 			Post:            post,
 			CommunityDetail: community,
 		}
 		data = append(data, postDetail)
+	}
+	return
+}
+
+func GetCommunityPostList(p *model.ParamPostList) (data []*model.ApiPostDetail, err error) {
+	// redis 按 order 查询 id
+	ids, err := redis.GetCommunityPostIDsInOrder(p)
+	if err != nil {
+		return nil, err
+	}
+	if len(ids) == 0 {
+		zap.L().Warn("redis.GetCommunityPostIDsInOrder success, but ids is nil")
+		return
+	}
+	// mysql 查询信息
+	posts, err := mysql.GetPostListByIDs(ids)
+	if err != nil {
+		return nil, err
+	}
+	voteDatas, err := redis.GetPostVoteData(ids)
+	if err != nil {
+		return nil, err
+	}
+	data = make([]*model.ApiPostDetail, 0, len(posts))
+
+	for idx, post := range posts {
+		user, err := mysql.GetUserByID(post.AuthorID)
+		if err != nil {
+			zap.L().Error(" mysql.GetUserByID(id) failed", zap.Uint64("author_id", post.AuthorID), zap.Error(err))
+			continue
+		}
+		community, err := mysql.GetCommunityDetailByID(post.CommunityID)
+		if err != nil {
+			zap.L().Error(" mysql.GetCommunityDetailByID(id) failed", zap.Uint64("community_id", post.CommunityID), zap.Error(err))
+			continue
+		}
+		postDetail := &model.ApiPostDetail{
+			AuthorName:      user.Username,
+			VoteNum:         voteDatas[idx],
+			Post:            post,
+			CommunityDetail: community,
+		}
+		data = append(data, postDetail)
+	}
+	return
+}
+
+func GetPostListNew(p *model.ParamPostList) (data []*model.ApiPostDetail, err error) {
+	if p.CommunityID == 0 {
+		// 查所有
+		data, err = GetPostList2(p)
+	} else {
+		// 查社区
+		data, err = GetCommunityPostList(p)
+	}
+
+	if err != nil {
+		zap.L().Error("GetPostListNew failed", zap.Error(err))
+		return nil, err
 	}
 	return
 }
