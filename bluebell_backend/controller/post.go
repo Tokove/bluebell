@@ -62,7 +62,7 @@ func GetPostDetailHandler(c *gin.Context) {
 	ResponseSuccess(c, detail)
 }
 
-func GetPostHandler(c *gin.Context) {
+func GetPostListHandler(c *gin.Context) {
 	page, size := getPageInfo(c)
 
 	data, err := service.GetPostList(page, size)
@@ -78,7 +78,19 @@ func GetPostHandler(c *gin.Context) {
 // 1.获取参宿
 // 2.redis查询id列表
 // 3.去数据库查询对应信息
-func GetPostHandler2(c *gin.Context) {
+
+// GetPostListHandler2 升级版帖子列表接口
+// @Summary 升级版帖子列表接口
+// @Description 可按社区按时间或分数排序查询帖子列表接口
+// @Tags 帖子相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Param object query model.ParamPostList false "查询参数"
+// @Security ApiKeyAuth
+// @Success 200 {object} _ResponsePostList
+// @Router /posts2 [get]
+func GetPostListHandler2(c *gin.Context) {
 	p := &model.ParamPostList{
 		Page:  model.DefaultPage,
 		Size:  model.DefaultSize,

@@ -2,10 +2,13 @@ package router
 
 import (
 	"bluebell_backend/controller"
+	_ "bluebell_backend/docs" // 千万不要忘了导入把你上一步生成的docs
 	"bluebell_backend/logger"
 	"bluebell_backend/middleware"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	gs "github.com/swaggo/gin-swagger"
 )
 
 func SetupRouter(mode string) *gin.Engine {
@@ -14,6 +17,8 @@ func SetupRouter(mode string) *gin.Engine {
 	}
 	r := gin.New()
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
+
+	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
 
 	// ---------------------------------------------------------------------------------
 	v1 := r.Group("/api/v1")
@@ -27,8 +32,8 @@ func SetupRouter(mode string) *gin.Engine {
 
 		v1.POST("/post", controller.CreatePostHandler)
 		v1.GET("/post/:id", controller.GetPostDetailHandler)
-		v1.GET("/posts", controller.GetPostHandler)
-		v1.GET("/posts2", controller.GetPostHandler2)
+		v1.GET("/posts", controller.GetPostListHandler)
+		v1.GET("/posts2", controller.GetPostListHandler2)
 
 		v1.POST("/vote", controller.PostVoteHandler)
 	}
